@@ -105,35 +105,36 @@ class TestCandidateBusiness:
     def test_candidate_business_creation(self):
         """Test creating a candidate business."""
         candidate = CandidateBusiness(
-            business_id="test-123",
+            id="test-123",
             name="Test Corp",
             website="https://test.com",
+            domain="test.com",
             description="A test company",
-            categories=[ServiceCategory.DATA_ANALYTICS],
-            contact=ContactInfo(email="contact@test.com"),
+            industry="Technology",
             location="San Francisco",
             size="100-200",
             source="csv",
         )
         
-        assert candidate.business_id == "test-123"
+        assert candidate.id == "test-123"
         assert candidate.name == "Test Corp"
-        assert candidate.categories[0] == ServiceCategory.DATA_ANALYTICS
-        assert candidate.contact.email == "contact@test.com"
+        assert candidate.website == "https://test.com"
+        assert candidate.domain == "test.com"
     
     def test_candidate_defaults(self):
         """Test candidate business defaults."""
         candidate = CandidateBusiness(
-            business_id="test-123",
+            id="test-123",
             name="Test Corp",
             source="test",
         )
         
         assert candidate.website is None
         assert candidate.description is None
-        assert candidate.categories == []
-        assert candidate.contact == ContactInfo()
+        assert candidate.location is None
+        assert candidate.size is None
         assert candidate.status == ProspectStatus.DISCOVERED
+        assert candidate.tags == []
 
 
 class TestEvidenceRecord:
@@ -142,18 +143,19 @@ class TestEvidenceRecord:
     def test_evidence_record_creation(self):
         """Test creating an evidence record."""
         evidence = EvidenceRecord(
-            evidence_id="ev-123",
-            business_id="biz-456",
+            id="ev-123",
+            candidate_id="biz-456",
             source_url="https://test.com",
             category=EvidenceCategory.WEBSITE_HTTPS,
             observation="HTTPS enabled",
+            timestamp="2024-01-01T00:00:00Z",
             verification_method=VerificationMethod.HTTP_CHECK,
             confidence=1.0,
             status=EvidenceStatus.VERIFIED,
         )
         
-        assert evidence.evidence_id == "ev-123"
-        assert evidence.business_id == "biz-456"
+        assert evidence.id == "ev-123"
+        assert evidence.candidate_id == "biz-456"
         assert evidence.category == EvidenceCategory.WEBSITE_HTTPS
         assert evidence.confidence == 1.0
     
@@ -161,11 +163,12 @@ class TestEvidenceRecord:
         """Test confidence bounds."""
         # Valid confidence
         evidence = EvidenceRecord(
-            evidence_id="ev-123",
-            business_id="biz-456",
+            id="ev-123",
+            candidate_id="biz-456",
             source_url="https://test.com",
             category=EvidenceCategory.WEBSITE_HTTPS,
             observation="Test",
+            timestamp="2024-01-01T00:00:00Z",
             confidence=0.5,
         )
         assert evidence.confidence == 0.5
@@ -173,22 +176,24 @@ class TestEvidenceRecord:
         # Invalid confidence (too high)
         with pytest.raises(Exception):
             EvidenceRecord(
-                evidence_id="ev-123",
-                business_id="biz-456",
+                id="ev-123",
+                candidate_id="biz-456",
                 source_url="https://test.com",
                 category=EvidenceCategory.WEBSITE_HTTPS,
                 observation="Test",
+                timestamp="2024-01-01T00:00:00Z",
                 confidence=1.5,
             )
         
         # Invalid confidence (too low)
         with pytest.raises(Exception):
             EvidenceRecord(
-                evidence_id="ev-123",
-                business_id="biz-456",
+                id="ev-123",
+                candidate_id="biz-456",
                 source_url="https://test.com",
                 category=EvidenceCategory.WEBSITE_HTTPS,
                 observation="Test",
+                timestamp="2024-01-01T00:00:00Z",
                 confidence=-0.1,
             )
 

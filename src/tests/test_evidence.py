@@ -5,14 +5,14 @@ import asyncio
 from datetime import datetime
 from unittest.mock import AsyncMock, patch
 
-from nurafinix.activities.evidence import (
+from src.nurafinix.activities.evidence import (
     collect_website_evidence,
     audit_website,
     analyze_demand,
     _is_safe_url,
     _generate_evidence_id,
 )
-from nurafinix.models.prospect import (
+from src.nurafinix.models.prospect import (
     CandidateBusiness,
     EvidenceRecord,
     EvidenceCategory,

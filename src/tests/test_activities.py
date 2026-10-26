@@ -7,14 +7,14 @@ from pathlib import Path
 import tempfile
 import os
 
-from nurafinix.activities.discovery import (
+from src.nurafinix.activities.discovery import (
     discover_from_csv,
     normalize_business,
     deduplicate_candidates,
     _generate_business_id,
     _parse_service_categories,
 )
-from nurafinix.models.prospect import BusinessRecord, CandidateBusiness, ServiceCategory
+from src.nurafinix.models.prospect import BusinessRecord, CandidateBusiness, ServiceCategory
 
 
 class TestCSVImport:

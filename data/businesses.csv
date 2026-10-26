@@ -1,0 +1,6 @@
+name,website,description,industry,size,location,source
+Acme Corp,https://www.acme.com,"A tech company looking for data solutions","Technology",100-200,San Francisco,csv_import
+TechStart Inc,https://techstart.com,"Startup needing analytics help","Technology",10-50,Austin,csv_import
+DataFlow Ltd,https://dataflow.example,"Data engineering company","Data",50-100,New York,csv_import
+WebSolutions Co,https://websolutions.biz,"Web development agency","Web Development",200-500,Seattle,csv_import
+Automation Inc,https://automation.io,"Looking to automate processes","Automation",50-100,Boston,csv_import
