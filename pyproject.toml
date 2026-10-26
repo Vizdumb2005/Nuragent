@@ -1,0 +1,36 @@
+[project]
+name = "nurafinix-prospect-engine"
+version = "0.1.0"
+description = "Personal lead-generation system for Nurafinix Labs using Mistral Workflows"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mistralai-workflows[mistralai]>=3.0.0,<4",
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+    "httpx>=0.20",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11",
+    "mypy>=1.15",
+    "semgrep>=1.0",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "watchdog>=4.0",
+]
+
+[tool.uv]
+exclude-newer = "7 days"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nurafinix", "src/entrypoints", "src/workflows", "src/examples"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/worker.py" = "worker.py"
+"src/nurafinix/worker.py" = "src/nurafinix/worker.py"
